@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Doctors from "../pages/Doctors";
 import Patients from "../pages/Patients";
 import Appointments from "../pages/Appointments";
+import SettingsPage from "../pages/Settings";
 
 export const privateRoutes: RouteObject[] = [
     {
@@ -30,6 +31,10 @@ export const privateRoutes: RouteObject[] = [
             {
                 path:'appointments',
                 element:<Appointments/>
+            },
+            {
+                path:'settings',
+                element:<SettingsPage/>
             }
         ]
 
