@@ -51,12 +51,12 @@ const Dashboard: React.FC = () => {
   useEffect(()=>{
     const fetchStats = async() =>{
       try{
-        const res = await axios.get('https://laravelresfulapi-production.up.railway.app/api/statistics');
+        const res = await axios.get('http://127.0.0.1:8000/api/statistics');
         const data = res.data
         setStats([
           { title: 'Total Patients', value: data.total_patients, icon: <PeopleIcon />, color: 'primary' },
           { title: 'Total Doctors', value: data.total_doctors, icon: <DoctorsIcon />, color: 'secondary' },
-          { title: 'Appointments', value: data.total_appointments, icon: <AppointmentsIcon />, color: 'info' },
+          { title: 'Appointments', value: data.total, icon: <AppointmentsIcon />, color: 'info' },
           { title: 'Available Beds', value: data.available_beds, icon: <HospitalIcon />, color: 'success' },
         ]);
       } catch( error){
