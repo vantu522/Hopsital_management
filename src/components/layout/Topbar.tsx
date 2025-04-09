@@ -1,6 +1,6 @@
 import React from 'react';
 import { RiNotification3Line, RiMenuLine } from 'react-icons/ri';
-import LogoutButton from "../LogoutButton";
+import LogoutButton from "../ui/LogoutButton";
 
 const Topbar: React.FC = () => {
   return (

@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-import { List, ListItem, ListItemIcon, ListItemText, Divider, Box, Typography, Collapse } from "@mui/material"
+import { List, ListItem, ListItemIcon, ListItemText, Divider, Box, Typography } from "@mui/material"
 import { motion } from "framer-motion"
 import {
   Dashboard as DashboardIcon,
@@ -10,51 +9,19 @@ import {
   CalendarToday as CalendarIcon,
   Settings as SettingsIcon,
   LocalHospital as HospitalIcon,
-  KeyboardArrowRight as ArrowIcon,
-  ExpandMore as ExpandMoreIcon,
-  ExpandLess as ExpandLessIcon,
 } from "@mui/icons-material"
 import { NavLink, useLocation } from "react-router-dom"
 
 const menuItems = [
-  {
-    text: "Dashboard",
-    icon: <DashboardIcon />,
-    path: "/admin",
-  },
-  {
-    text: "Quản lý bệnh nhân",
-    icon: <PeopleIcon />,
-    path: "/admin/patients",
-    subItems: [
-      { text: "Danh sách bệnh nhân", path: "/admin/patients" },
-      { text: "Thêm bệnh nhân mới", path: "/admin/patients/new" },
-    ],
-  },
-  {
-    text: "Quản lý bác sĩ",
-    icon: <MedicalServicesIcon />,
-    path: "/admin/doctors",
-  },
-  {
-    text: "Lịch khám",
-    icon: <CalendarIcon />,
-    path: "/admin/appointments",
-  },
-  {
-    text: "Settings",
-    icon: <SettingsIcon />,
-    path: "/admin/settings",
-  },
+  { text: "Dashboard", icon: <DashboardIcon />, path: "/admin" },
+  { text: "Quản lý bệnh nhân", icon: <PeopleIcon />, path: "/admin/patients" },
+  { text: "Quản lý bác sĩ", icon: <MedicalServicesIcon />, path: "/admin/doctors" },
+  { text: "Lịch khám", icon: <CalendarIcon />, path: "/admin/appointments" },
+  { text: "Settings", icon: <SettingsIcon />, path: "/admin/settings" },
 ]
 
 const Sidebar = () => {
   const location = useLocation()
-  const [expandedItem, setExpandedItem] = useState<number | null>(null)
-
-  const handleExpandClick = (index: number) => {
-    setExpandedItem(expandedItem === index ? null : index)
-  }
 
   return (
     <Box
@@ -89,132 +56,45 @@ const Sidebar = () => {
 
       <List sx={{ padding: "12px 0" }}>
         {menuItems.map((item, index) => {
-          const isActive =
-            location.pathname === item.path ||
-            (item.subItems && item.subItems.some((subItem) => location.pathname === subItem.path))
-          const hasSubItems = item.subItems && item.subItems.length > 0
-          const isExpanded = expandedItem === index
+          const isActive = location.pathname === item.path
 
           return (
-            <Box key={item.text}>
-              <motion.div whileHover={{ x: 4 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-                {hasSubItems ? (
-                  <Box>
-                    <ListItem
-                      component="button"
-                      onClick={() => handleExpandClick(index)}
-                      sx={{
-                        padding: "10px 16px",
-                        margin: "4px 8px",
-                        borderRadius: "8px",
-                        backgroundColor: isActive ? "rgba(59, 130, 246, 0.08)" : "transparent",
-                        "&:hover": {
-                          backgroundColor: "rgba(59, 130, 246, 0.05)",
-                        },
-                      }}
-                    >
-                      <ListItemIcon
-                        sx={{
-                          minWidth: "40px",
-                          color: isActive ? "#2563eb" : "rgba(0, 0, 0, 0.6)",
-                        }}
-                      >
-                        {item.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={item.text}
-                        sx={{
-                          "& .MuiTypography-root": {
-                            fontWeight: isActive ? 600 : 500,
-                            color: isActive ? "#2563eb" : "rgba(0, 0, 0, 0.7)",
-                          },
-                        }}
-                      />
-                      {isExpanded ? <ExpandLessIcon color="action" /> : <ExpandMoreIcon color="action" />}
-                    </ListItem>
-
-                    <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-                      <List component="div" disablePadding>
-                        {item.subItems?.map((subItem) => {
-                          const isSubActive = location.pathname === subItem.path
-
-                          return (
-                            <motion.div key={subItem.text} whileHover={{ x: 4 }} whileTap={{ scale: 0.98 }}>
-                              <NavLink
-                                to={subItem.path}
-                                className={({ isActive }) => `block ${isActive ? "text-blue-600" : "text-gray-600"}`}
-                              >
-                                <ListItem
-                                  component="button"
-                                  sx={{
-                                    padding: "8px 16px 8px 56px",
-                                    margin: "2px 8px",
-                                    borderRadius: "8px",
-                                    backgroundColor: isSubActive ? "rgba(59, 130, 246, 0.08)" : "transparent",
-                                    "&:hover": {
-                                      backgroundColor: "rgba(59, 130, 246, 0.05)",
-                                    },
-                                  }}
-                                >
-                                  <ListItemText
-                                    primary={subItem.text}
-                                    sx={{
-                                      "& .MuiTypography-root": {
-                                        fontSize: "0.875rem",
-                                        fontWeight: isSubActive ? 600 : 400,
-                                        color: isSubActive ? "#2563eb" : "rgba(0, 0, 0, 0.6)",
-                                      },
-                                    }}
-                                  />
-                                  {isSubActive && <ArrowIcon sx={{ color: "#2563eb", fontSize: 16 }} />}
-                                </ListItem>
-                              </NavLink>
-                            </motion.div>
-                          )
-                        })}
-                      </List>
-                    </Collapse>
-                  </Box>
-                ) : (
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) => `block ${isActive ? "text-blue-600" : "text-gray-600"}`}
+            <motion.div key={item.text} whileHover={{ x: 4 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) => `block ${isActive ? "text-blue-600" : "text-gray-600"}`}
+              >
+                <ListItem
+                  component="button"
+                  sx={{
+                    padding: "10px 16px",
+                    margin: "4px 8px",
+                    borderRadius: "8px",
+                    backgroundColor: isActive ? "rgba(59, 130, 246, 0.08)" : "transparent",
+                    "&:hover": {
+                      backgroundColor: "rgba(59, 130, 246, 0.05)",
+                    },
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: "40px",
+                      color: isActive ? "#2563eb" : "rgba(0, 0, 0, 0.6)",
+                    }}
                   >
-                    <ListItem
-                      component="button" // Explicitly set the component
-                      onClick={() => handleExpandClick(index)}
-                      sx={{
-                        padding: "10px 16px",
-                        margin: "4px 8px",
-                        borderRadius: "8px",
-                        backgroundColor: isActive ? "rgba(59, 130, 246, 0.08)" : "transparent",
-                        "&:hover": {
-                          backgroundColor: "rgba(59, 130, 246, 0.05)",
-                        },
-                      }}
-                                    >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: "40px",
-                        color: isActive ? "#2563eb" : "rgba(0, 0, 0, 0.6)",
-                      }}
-                    >
-                      {item.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={item.text}
-                      sx={{
-                        "& .MuiTypography-root": {
-                          fontWeight: isActive ? 600 : 500,
-                          color: isActive ? "#2563eb" : "rgba(0, 0, 0, 0.7)",
-                        },
-                      }}
-                    />
-                    {isExpanded ? <ExpandLessIcon color="action" /> : <ExpandMoreIcon color="action" />}
-                  </ListItem>
-                  </NavLink>
-                )}
-              </motion.div>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      "& .MuiTypography-root": {
+                        fontWeight: isActive ? 600 : 500,
+                        color: isActive ? "#2563eb" : "rgba(0, 0, 0, 0.7)",
+                      },
+                    }}
+                  />
+                </ListItem>
+              </NavLink>
 
               {index === 2 && (
                 <Divider
@@ -224,7 +104,7 @@ const Sidebar = () => {
                   }}
                 />
               )}
-            </Box>
+            </motion.div>
           )
         })}
       </List>
@@ -243,4 +123,3 @@ const Sidebar = () => {
 }
 
 export default Sidebar
-

@@ -6,8 +6,8 @@ import {
   EventAvailable as AppointmentsIcon,
   LocalHospital as HospitalIcon,
 } from '@mui/icons-material';
-import StatsCard from '../components/StatsCard';
-import RecentPatients from '../components/RecentPatients';
+import StatsCard from '../components/ui/StatsCard';
+import RecentPatients from '../components/ui/RecentPatients';
 import { Patient } from '../types/patient';
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
   const [stats, setStats] = useState([
     { title: 'Total Patients', value: 0, icon: <PeopleIcon />, color: 'primary' },
     { title: 'Total Doctors', value: 0, icon: <DoctorsIcon />, color: 'secondary' },
-    { title: 'Appointments', value: 0, icon: <AppointmentsIcon />, color: 'info' },
+    { title: 'Total Appointments', value: 0, icon: <AppointmentsIcon />, color: 'info' },
     { title: 'Available Beds', value: '0/0', icon: <HospitalIcon />, color: 'success' },
   ]);
 
@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
         setStats([
           { title: 'Total Patients', value: data.total_patients, icon: <PeopleIcon />, color: 'primary' },
           { title: 'Total Doctors', value: data.total_doctors, icon: <DoctorsIcon />, color: 'secondary' },
-          { title: 'Appointments', value: data.total, icon: <AppointmentsIcon />, color: 'info' },
+          { title: 'Appointments', value: data.total_appointments, icon: <AppointmentsIcon />, color: 'info' },
           { title: 'Available Beds', value: data.available_beds, icon: <HospitalIcon />, color: 'success' },
         ]);
       } catch( error){

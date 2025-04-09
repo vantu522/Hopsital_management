@@ -28,6 +28,21 @@ const PatientsList = ({ patients, onEdit, onDelete }: PatientsListProps) => {
           }
           handleCloseConfirm();
         };
+
+
+        const getGenderLabel = (gender: string): string => {
+          switch (gender) {
+            case 'male':
+              return 'Nam';
+            case 'female':
+              return 'Nữ';
+            case 'others':
+              return 'Khác';
+           
+            default:
+              return gender;
+          }
+        };
   return (
     <>
       <TableContainer component={Paper} className="mt-4">
@@ -48,7 +63,7 @@ const PatientsList = ({ patients, onEdit, onDelete }: PatientsListProps) => {
             <TableRow key={patient.id}>
               <TableCell>{patient.full_name}</TableCell>
               <TableCell>{patient.age}</TableCell>
-              <TableCell>{patient.gender}</TableCell>
+              <TableCell>{getGenderLabel(patient.gender)}</TableCell>
               <TableCell>{patient.diagnosis}</TableCell>
               <TableCell>{dayjs(patient.admission_date).format("DD/MM/YYYY")}</TableCell>
               <TableCell>{patient.room_number}</TableCell>

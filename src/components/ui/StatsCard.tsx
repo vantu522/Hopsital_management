@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { StatsCardProps } from '../types/statsprops';
+import { StatsCardProps } from '../../types/statsprops';
 
 const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon, color = 'primary' }) => {
   const colors = {
