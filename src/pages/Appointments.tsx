@@ -4,6 +4,7 @@ import { getAppointments, addAppointment, updateAppointment, deleteAppointment }
 import AppointmentsList from "../components/Appointments/AppointmentList";
 import AppointmentForm from "../components/Appointments/AppointmentForm";
 import { Appointment, AppointmentFormData } from "../types/appointment";
+import { toast } from "react-toastify";
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -27,13 +28,21 @@ const Appointments = () => {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async (data: AppointmentFormData) => {
+  try{
     if (selectedAppointment) {
       await updateAppointment(selectedAppointment.id, data);
+      toast.success("Cập nhật lịch hẹn thành công")
     } else {
       await addAppointment(data);
+      toast.success("Thêm lịch hẹn thành công")
     }
     fetchAppointments();
     handleClose();
+  } catch(error){
+    toast.error("Thao tác thất bại")
+    console.error(error)
+
+  }
   };
 
   const handleDelete = async (id: number) => {

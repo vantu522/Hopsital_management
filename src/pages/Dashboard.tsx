@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState} from 'react';
 import { motion } from 'framer-motion';
 import {
   People as PeopleIcon,
@@ -9,15 +9,16 @@ import {
 import StatsCard from '../components/StatsCard';
 import RecentPatients from '../components/RecentPatients';
 import { Patient } from '../types/patient';
+import axios from 'axios';
 
 const Dashboard: React.FC = () => {
   // Mock data
-  const stats = [
-    { title: 'Total Patients', value: 124, icon: <PeopleIcon />, color: 'primary' },
-    { title: 'Total Doctors', value: 24, icon: <DoctorsIcon />, color: 'secondary' },
-    { title: 'Appointments', value: 56, icon: <AppointmentsIcon />, color: 'info' },
-    { title: 'Available Beds', value: '12/50', icon: <HospitalIcon />, color: 'success' },
-  ];
+  const [stats, setStats] = useState([
+    { title: 'Total Patients', value: 0, icon: <PeopleIcon />, color: 'primary' },
+    { title: 'Total Doctors', value: 0, icon: <DoctorsIcon />, color: 'secondary' },
+    { title: 'Appointments', value: 0, icon: <AppointmentsIcon />, color: 'info' },
+    { title: 'Available Beds', value: '0/0', icon: <HospitalIcon />, color: 'success' },
+  ]);
 
   const recentPatients: Patient[] = [
     {
@@ -45,6 +46,25 @@ const Dashboard: React.FC = () => {
       updated_at: new Date().toISOString(),
     },
   ];
+  
+
+  useEffect(()=>{
+    const fetchStats = async() =>{
+      try{
+        const res = await axios.get('https://laravelresfulapi-production.up.railway.app/api/statistics');
+        const data = res.data
+        setStats([
+          { title: 'Total Patients', value: data.total_patients, icon: <PeopleIcon />, color: 'primary' },
+          { title: 'Total Doctors', value: data.total_doctors, icon: <DoctorsIcon />, color: 'secondary' },
+          { title: 'Appointments', value: data.total_appointments, icon: <AppointmentsIcon />, color: 'info' },
+          { title: 'Available Beds', value: data.available_beds, icon: <HospitalIcon />, color: 'success' },
+        ]);
+      } catch( error){
+        console.error(error)
+      }
+    }
+    fetchStats()
+  },[])
   
   return (
     <div className="p-6">

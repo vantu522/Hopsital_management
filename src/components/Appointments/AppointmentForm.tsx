@@ -58,6 +58,14 @@ const PatientForm = ({ open, onClose, onSubmit, initialData }: AppointmentFormPr
     onSubmit(formData);
   };
 
+  const statusOptions = [
+    { value: "pending", label: "Chờ xác nhận" },
+    { value: "confirmed", label: "Đã xác nhận" },
+    { value: "canceled", label: "Đã huỷ" },
+    { value: "completed", label: "Đã hoàn thành" },
+  ];
+  
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{initialData ? "Sửa thông tin lịch hẹn" : "Tạo lịch hẹn"}</DialogTitle>
@@ -112,9 +120,9 @@ const PatientForm = ({ open, onClose, onSubmit, initialData }: AppointmentFormPr
         value={formData.status}
         onChange={handleChange}
         >
-             {["pending", "confirmed", "canceled", "completed"].map((status) => (
-            <MenuItem key={status} value={status}>
-              {status}
+             {statusOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
             </MenuItem>
           ))}
         </TextField>

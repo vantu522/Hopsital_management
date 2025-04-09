@@ -9,7 +9,7 @@ import Register from "../pages/Login/Register";
 export const publicRoutes: RouteObject[] = [
     {
         path:'/',
-        element:<Appointments/>
+        element:<Login/>
     },
     {
         path:'/login',

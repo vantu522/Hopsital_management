@@ -4,6 +4,7 @@ import { getPatients, addPatient, updatePatient, deletePatient } from "../api/pa
 import PatientsList from "../components/Patients/PatientList";
 import PatientForm from "../components/Patients/PatientForm";
 import { Patient, PatientFormData } from "../types/patient";
+import { toast } from "react-toastify";
 
 const Patients = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -27,18 +28,31 @@ const Patients = () => {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async (data: PatientFormData) => {
+  try{
     if (selectedPatient) {
       await updatePatient(selectedPatient.id, data);
+      toast.success("Cập nhật bệnh nhân thành công")
     } else {
       await addPatient(data);
+      toast.success("Thêm bệnh nhân thành công")
     }
     fetchPatients();
     handleClose();
+  } catch(error){
+    toast.error("Có lỗi xảy ra!");
+    console.error(error);
+  }
   };
 
   const handleDelete = async (id: number) => {
-    await deletePatient(id);
-    fetchPatients();
+   try{
+      await deletePatient(id);
+      fetchPatients();
+      toast.success("Xoá bệnh nhân thành công")
+    } catch(error){
+      toast.error("Có lỗi xảy ra!");
+      console.error(error);
+    }
   };
 
   return (

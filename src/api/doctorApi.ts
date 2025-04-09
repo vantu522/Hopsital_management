@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Doctor, DoctorFormData } from "../types/doctor";
 import axiosInstance from "../config/axios";
-const API_URL = "http://127.0.0.1:8000/api/doctors";
+const API_URL = "https://laravelresfulapi-production.up.railway.app/api/doctors";
 
 export const getDoctors = async (): Promise<Doctor[]> => {
     const response = await axiosInstance.get(API_URL);

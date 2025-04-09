@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Appointment, AppointmentFormData } from "../types/appointment";
-const API_URL = "http://127.0.0.1:8000/api/appointments"
+const API_URL = "https://laravelresfulapi-production.up.railway.app/api/appointments"
 
 export const getAppointments= async(): Promise<Appointment[]> =>{
     const response = await axios.get(API_URL);

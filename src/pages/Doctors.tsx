@@ -4,6 +4,7 @@ import { getDoctors,updateDoctor,deleteDoctor, addDoctor } from "../api/doctorAp
 import { Button, } from "@mui/material";
 import DoctorForm from "../components/Doctors/DoctorForm";
 import DoctorsList from "../components/Doctors/DoctorList";
+import {toast} from 'react-toastify'
 
 const Doctors = () =>{
     const [doctors,setDoctors] = useState<Doctor[]>([]);
@@ -27,19 +28,34 @@ const Doctors = () =>{
       const handleClose = () => setOpen(false);
     
       const handleSubmit = async (data: DoctorFormData) => {
-        if (selectedDoctor) {
-          await updateDoctor(selectedDoctor.id, data);
-        } else {
-          await addDoctor(data);
+        try {
+          if (selectedDoctor) {
+            await updateDoctor(selectedDoctor.id, data);
+            toast.success("Cập nhật bác sĩ thành công");
+          } else {
+            await addDoctor(data);
+            toast.success("Thêm bác sĩ thành công");
+          }
+          fetchDoctors();
+          handleClose();
+        } catch (error) {
+          toast.error("Có lỗi xảy ra!");
+          console.error(error);
         }
-        fetchDoctors();
-        handleClose();
       };
+      
     
       const handleDelete = async (id: number) => {
-        await deleteDoctor(id);
-        fetchDoctors();
+        try {
+          await deleteDoctor(id);
+          toast.success("Xoá bác sĩ thành công");
+          fetchDoctors();
+        } catch (error) {
+          toast.error("Xoá thất bại");
+          console.error(error);
+        }
       };
+      
 
     return (
         <div className="p-4 mt-16">

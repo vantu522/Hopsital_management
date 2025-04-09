@@ -1,7 +1,7 @@
 import { Patient, PatientFormData } from "../types/patient";
 import axios from 'axios';
 
-const API_URL = "http://127.0.0.1:8000/api/patients"; // Thay URL này bằng backend của bạn
+const API_URL = "https://laravelresfulapi-production.up.railway.app/api/patients"; // Thay URL này bằng backend của bạn
 
 export const getPatients = async (): Promise<Patient[]> => {
   const response = await axios.get(API_URL);
